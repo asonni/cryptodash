@@ -3,13 +3,10 @@ import styled from 'styled-components';
 import './App.css';
 
 const CustomElement = styled.div`
-  color: green;
   font-size: 30px;
 `;
 
-const BlueElement = CustomElement.extend`
-  color: blue;
-`;
+const BlueElement = CustomElement.extend``;
 
 class App extends Component {
   render() {
