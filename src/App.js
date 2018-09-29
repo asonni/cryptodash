@@ -2,19 +2,27 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import './App.css';
 
-const CustomElement = styled.div`
-  font-size: 30px;
+const Logo = styled.div`
+  font-size: 1.5em;
 `;
 
-const BlueElement = CustomElement.extend``;
+const ControlButton = styled.div``;
+
+const AppLayout = styled.div`
+  padding: 40px;
+  display: grid;
+  grid-template-columns: 180px auto 100px 100px;
+`;
 
 class App extends Component {
   render() {
     return (
-      <div>
-        <CustomElement>Hello</CustomElement>
-        <BlueElement>Hello Blue</BlueElement>
-      </div>
+      <AppLayout>
+        <Logo>CryptoDash</Logo>
+        <div />
+        <ControlButton>Dashboard</ControlButton>
+        <ControlButton>Settings</ControlButton>
+      </AppLayout>
     );
   }
 }
