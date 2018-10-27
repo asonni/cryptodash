@@ -1,5 +1,5 @@
 import React from 'react';
-import _ from 'lodash';
+// import _ from 'lodash';
 import styled, { css } from 'styled-components';
 import {
   subtleBoxShadow,
@@ -8,7 +8,7 @@ import {
   greenBoxShadow
 } from './Style';
 
-const CoinGrid = styled.div`
+export const CoinGrid = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   ${props =>
@@ -19,7 +19,7 @@ const CoinGrid = styled.div`
   margin-top: 40px;
 `;
 
-const CoinTile = styled.div`
+export const CoinTile = styled.div`
   ${subtleBoxShadow};
   ${lightBlueBackground};
   padding: 10px;
@@ -36,6 +36,14 @@ const CoinTile = styled.div`
       }
     `};
   ${props =>
+    props.dashboardFavorite &&
+    css`
+      &:hover {
+        pointer-events: none;
+        ${greenBoxShadow};
+      }
+    `};
+  ${props =>
     props.chosen &&
     !props.favorite &&
     css`
@@ -44,12 +52,12 @@ const CoinTile = styled.div`
     `};
 `;
 
-const CoinHeaderGrid = styled.div`
+export const CoinHeaderGrid = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
 `;
 
-const CoinSymbol = styled.div`
+export const CoinSymbol = styled.div`
   justify-self: right;
 `;
 
