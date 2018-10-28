@@ -1,0 +1,1 @@
+{"version":3,"sources":["/Users/aladdinsonni/Programs/cryptodash/src/App.css"],"names":[],"mappings":"AAAA,KACE,yBAA0B,AAC1B,WAAa,AACb,+BAAoC,CACrC,AAED,oBACE,YAAc,CACf","file":"main.a17e13e7.chunk.css","sourcesContent":["body {\n  background-color: #010e2c;\n  color: white;\n  font-family: 'Do Hyeon', sans-serif;\n}\n\n.highcharts-credits {\n  display: none;\n}\n"]}
