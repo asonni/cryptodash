@@ -1,26 +1,33 @@
 import React from 'react';
-import styled, { css } from 'styled-components';
 import { CoinGrid, CoinTile, CoinHeaderGrid, CoinSymbol } from './CoinList';
+import styled, { css } from 'styled-components';
+import ReactHighcharts from 'react-highcharts';
 import {
   fontSizeBig,
-  fontSize2,
   fontSize3,
   subtleBoxShadow,
   lightBlueBackground,
+  fontSize2,
   backgroundColor2
 } from './Style';
+import highchartsConfig from './HighchartsConfig';
+import theme from './HighchartsTheme';
+
+ReactHighcharts.Highcharts.setOptions(theme);
 
 const numberFormat = number => {
   return +(number + '').slice(0, 7);
 };
 
-// const ChartSelect = styled.select`
-//   ${backgroundColor2} color: #1163c9;
-//   border: 1px solid;
-//   ${fontSize2} margin: 5px;
-//   height: 25px;
-//   float: right;
-// `;
+const ChartSelect = styled.select`
+  ${backgroundColor2};
+  color: #1163c9;
+  border: 1px solid;
+  ${fontSize2};
+  margin: 5px;
+  height: 25px;
+  float: right;
+`;
 
 const ChangePct = styled.div`
   color: green;
@@ -63,9 +70,13 @@ export default function() {
         let sym = Object.keys(price)[0];
         let data = price[sym]['USD'];
         let tileProps = {
+          key: sym,
           dashboardFavorite: sym === this.state.currentFavorite,
           onClick: () => {
-            this.setState({ currentFavorite: sym });
+            this.setState(
+              { currentFavorite: sym, historical: null },
+              this.fetchHistorical
+            );
             localStorage.setItem(
               'cryptoDash',
               JSON.stringify({
@@ -89,7 +100,7 @@ export default function() {
           </CoinTile>
         ) : (
           <CoinTileCompact {...tileProps}>
-            <div style={{ justifySelf: 'left' }}>{sym}</div>
+            <div style={{ justifySelf: 'left' }}> {sym}</div>
             <CoinSymbol>
               <ChangePct red={data.CHANGEPCT24HOUR < 0}>
                 {numberFormat(data.CHANGEPCT24HOUR)}%
@@ -106,14 +117,33 @@ export default function() {
           {this.state.coinList[this.state.currentFavorite].CoinName}
         </h2>
         <img
-          alt="coin"
+          alt={this.state.currentFavorite}
           style={{ height: '200px', display: 'block', margin: 'auto' }}
           src={`http://cryptocompare.com/${
             this.state.coinList[this.state.currentFavorite].ImageUrl
           }`}
         />
       </PaddingBlue>
-      <PaddingBlue>Chart goes here...</PaddingBlue>
+      <PaddingBlue>
+        <ChartSelect
+          defaultValue={'months'}
+          onChange={e => {
+            this.setState(
+              { timeInterval: e.target.value, historical: null },
+              this.fetchHistorical
+            );
+          }}
+        >
+          <option value="days">Days</option>
+          <option value="weeks">Weeks</option>
+          <option value="months">Months</option>
+        </ChartSelect>
+        {this.state.historical ? (
+          <ReactHighcharts config={highchartsConfig.call(this)} />
+        ) : (
+          <div> Loading historical data </div>
+        )}
+      </PaddingBlue>
     </ChartGrid>
   ];
 }

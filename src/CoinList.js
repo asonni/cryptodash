@@ -1,16 +1,15 @@
 import React from 'react';
-// import _ from 'lodash';
 import styled, { css } from 'styled-components';
 import {
   subtleBoxShadow,
-  lightBlueBackground,
+  greenBoxShadow,
   redBoxShadow,
-  greenBoxShadow
+  lightBlueBackground
 } from './Style';
 
 export const CoinGrid = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   ${props =>
     props.count &&
     css`
@@ -20,36 +19,38 @@ export const CoinGrid = styled.div`
 `;
 
 export const CoinTile = styled.div`
-  ${subtleBoxShadow};
+	${subtleBoxShadow};
   ${lightBlueBackground};
-  padding: 10px;
-  &:hover {
-    cursor: pointer;
-    ${greenBoxShadow};
-  }
-  ${props =>
+	padding: 10px; 
+	&:hover{
+		cursor: pointer; 
+		${greenBoxShadow};
+	}
+	${props =>
     props.favorite &&
     css`
       &:hover {
         cursor: pointer;
         ${redBoxShadow};
       }
-    `};
-  ${props =>
+    `}	
+	
+	${props =>
     props.dashboardFavorite &&
     css`
+      ${greenBoxShadow};
       &:hover {
         pointer-events: none;
-        ${greenBoxShadow};
       }
-    `};
-  ${props =>
+    `}
+	
+	${props =>
     props.chosen &&
     !props.favorite &&
     css`
       pointer-events: none;
       opacity: 0.4;
-    `};
+    `}
 `;
 
 export const CoinHeaderGrid = styled.div`
@@ -77,11 +78,10 @@ export default function(favorites = false) {
       Object.keys(this.state.coinList).slice(0, 100);
   return (
     <CoinGrid count={favorites && this.state.favorites.length}>
-      {coinKeys.map((coinKey, index) => (
+      {coinKeys.map(coinKey => (
         <CoinTile
-          key={index}
-          favorite={favorites}
           chosen={this.isInFavorites(coinKey)}
+          favorite={favorites}
           onClick={
             favorites
               ? () => {
@@ -93,15 +93,15 @@ export default function(favorites = false) {
           }
         >
           <CoinHeaderGrid>
-            <div>{this.state.coinList[coinKey].CoinName}</div>
+            <div> {this.state.coinList[coinKey].CoinName}</div>
             {favorites ? (
               <DeleteIcon>X</DeleteIcon>
             ) : (
-              <CoinSymbol>{this.state.coinList[coinKey].Symbol}</CoinSymbol>
+              <CoinSymbol> {this.state.coinList[coinKey].Symbol}</CoinSymbol>
             )}
           </CoinHeaderGrid>
           <img
-            alt="coin"
+            alt={coinKey}
             style={{ height: '50px' }}
             src={`http://cryptocompare.com/${
               this.state.coinList[coinKey].ImageUrl

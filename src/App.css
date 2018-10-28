@@ -3,3 +3,7 @@ body {
   color: white;
   font-family: 'Do Hyeon', sans-serif;
 }
+
+.highcharts-credits {
+  display: none;
+}
